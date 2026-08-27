@@ -64,8 +64,8 @@ class UmbracoLogEditorProvider {
     };
     webview.html = this.getHtml(webview);
 
-    const post = () => {
-      const parsed = parseClef(document.getText());
+    const postText = (text) => {
+      const parsed = parseClef(text);
       webview.postMessage({
         type: "load",
         fileName: path.basename(document.uri.fsPath),
@@ -74,19 +74,111 @@ class UmbracoLogEditorProvider {
       });
     };
 
-    // Live-update the view whenever the underlying file changes on disk / in editor.
+    const postFromDocument = () => postText(document.getText());
+
+    // Reads straight from disk, bypassing VS Code's text document cache — this
+    // is what lets polling notice writes that the editor's own file watcher misses.
+    const readDiskText = async () => {
+      try {
+        const bytes = await vscode.workspace.fs.readFile(document.uri);
+        return Buffer.from(bytes).toString("utf8");
+      } catch (e) {
+        return null;
+      }
+    };
+
+    let lastDiskText = document.getText();
+
+    const getConfig = () =>
+      vscode.workspace.getConfiguration("umbracoLogViewer", document.uri);
+
+    const pollOnce = async () => {
+      const text = await readDiskText();
+      if (text !== null && text !== lastDiskText) {
+        lastDiskText = text;
+        postText(text);
+      }
+    };
+
+    let pollTimer = null;
+    const stopPolling = () => {
+      if (pollTimer) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+    };
+    const startPolling = (intervalMs) => {
+      stopPolling();
+      pollOnce(); // pick up anything that changed while polling was off
+      pollTimer = setInterval(pollOnce, intervalMs);
+    };
+
+    let pollingEnabled = false;
+    let pollingInterval = 1000;
+    const sendPollingState = () => {
+      webview.postMessage({
+        type: "pollingState",
+        enabled: pollingEnabled,
+        intervalMs: pollingInterval,
+      });
+    };
+    const applyPollingState = () => {
+      pollingEnabled = getConfig().get("pollForChanges", false);
+      pollingInterval = Math.max(250, getConfig().get("pollInterval", 1000));
+      // The webview may not be listening yet — resent on "ready" below.
+      sendPollingState();
+      if (pollingEnabled) startPolling(pollingInterval);
+      else stopPolling();
+    };
+
+    applyPollingState();
+
+    // VS Code silently reloads the underlying TextDocument when the file changes on
+    // disk (even without our own polling), which fires this same event — so it must
+    // also respect the polling toggle, or "off" would still auto-refresh the view.
     const changeSub = vscode.workspace.onDidChangeTextDocument((e) => {
-      if (e.document.uri.toString() === document.uri.toString()) {
-        post();
+      if (e.document.uri.toString() !== document.uri.toString()) return;
+      lastDiskText = e.document.getText();
+      if (pollingEnabled) postFromDocument();
+    });
+
+    const configSub = vscode.workspace.onDidChangeConfiguration((e) => {
+      if (
+        e.affectsConfiguration("umbracoLogViewer.pollForChanges", document.uri) ||
+        e.affectsConfiguration("umbracoLogViewer.pollInterval", document.uri)
+      ) {
+        applyPollingState();
       }
     });
-    webviewPanel.onDidDispose(() => changeSub.dispose());
 
-    webview.onDidReceiveMessage((msg) => {
+    webviewPanel.onDidDispose(() => {
+      changeSub.dispose();
+      configSub.dispose();
+      stopPolling();
+    });
+
+    webview.onDidReceiveMessage(async (msg) => {
       switch (msg && msg.type) {
         case "ready":
-          post();
+          postFromDocument();
+          sendPollingState();
           break;
+        case "setPolling":
+          pollingEnabled = !!(msg && msg.enabled);
+          if (pollingEnabled) startPolling(pollingInterval);
+          else stopPolling();
+          sendPollingState();
+          break;
+        case "refresh": {
+          const text = await readDiskText();
+          if (text !== null) {
+            lastDiskText = text;
+            postText(text);
+          } else {
+            postFromDocument();
+          }
+          break;
+        }
         case "openRaw":
           vscode.commands.executeCommand(
             "vscode.openWith",
@@ -134,6 +226,8 @@ class UmbracoLogEditorProvider {
       <button id="clearSearch" class="ghost" title="Clear search" aria-label="Clear search">Clear</button>
       <span class="spacer"></span>
       <label class="follow"><input type="checkbox" id="follow" /> Follow tail</label>
+      <label class="follow" id="pollLabel" title="Automatically poll the file on disk for changes"><input type="checkbox" id="poll" /> Poll for changes</label>
+      <button id="refresh" class="ghost" title="Reload the file from disk">Refresh</button>
       <button id="openRaw" class="ghost" title="Open the raw file as text">Raw</button>
     </div>
     <div class="toolbar-row" id="levels"></div>

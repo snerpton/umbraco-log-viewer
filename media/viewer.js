@@ -28,6 +28,9 @@
     status: byId("status"),
     follow: /** @type {HTMLInputElement} */ (byId("follow")),
     openRaw: byId("openRaw"),
+    refresh: byId("refresh"),
+    poll: /** @type {HTMLInputElement} */ (byId("poll")),
+    pollLabel: byId("pollLabel"),
   };
 
   function byId(id) {
@@ -369,6 +372,12 @@
   els.openRaw.addEventListener("click", () =>
     vscode.postMessage({ type: "openRaw" })
   );
+  els.refresh.addEventListener("click", () =>
+    vscode.postMessage({ type: "refresh" })
+  );
+  els.poll.addEventListener("change", () =>
+    vscode.postMessage({ type: "setPolling", enabled: els.poll.checked })
+  );
 
   window.addEventListener("message", (e) => {
     const msg = e.data;
@@ -377,6 +386,14 @@
       parseErrors = msg.parseErrors || [];
       renderLevels();
       renderList();
+    } else if (msg.type === "pollingState") {
+      els.poll.checked = !!msg.enabled;
+      const seconds = msg.intervalMs ? (msg.intervalMs / 1000).toString() : "";
+      els.pollLabel.title = seconds
+        ? "Automatically poll the file on disk for changes (every " +
+          seconds +
+          "s)"
+        : "Automatically poll the file on disk for changes";
     }
   });
 

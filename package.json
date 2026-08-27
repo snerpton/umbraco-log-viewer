@@ -74,6 +74,22 @@
           "when": "resourceExtname == .json || resourceExtname == .clef"
         }
       ]
+    },
+    "configuration": {
+      "title": "Umbraco Log Viewer",
+      "properties": {
+        "umbracoLogViewer.pollForChanges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Default state of the \"Poll for changes\" toggle in the viewer toolbar. When on, the open log file is continuously re-read from disk — useful when VS Code's file watcher doesn't pick up updates on its own (e.g. network drives, Docker volumes). Can be turned on or off per-file from the toolbar; use the Refresh button to reload manually while polling is off."
+        },
+        "umbracoLogViewer.pollInterval": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 250,
+          "description": "How often (in milliseconds) to poll the log file for changes when polling is enabled."
+        }
+      }
     }
   },
   "scripts": {
