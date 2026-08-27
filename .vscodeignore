@@ -1,0 +1,8 @@
+.vscode/**
+.github/**
+samples/**
+node_modules/**
+.gitignore
+PUBLISHING.md
+**/*.map
+*.vsix

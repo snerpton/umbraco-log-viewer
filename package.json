@@ -1,0 +1,85 @@
+{
+  "name": "umbraco-log-viewer",
+  "displayName": "Umbraco Log Viewer (Serilog / CLEF)",
+  "description": "View UmbracoTraceLog.*.json and .clef log files produced by Serilog. Renders message templates, colours by level, and lets you search, filter and expand event details.",
+  "version": "0.1.0",
+  "publisher": "your-publisher-id",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/umbraco-log-viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/umbraco-log-viewer/issues"
+  },
+  "galleryBanner": {
+    "color": "#182338",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "umbraco",
+    "serilog",
+    "clef",
+    "log",
+    "log viewer",
+    "trace log"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "umbracoLogViewer.editor",
+        "displayName": "Umbraco Log Viewer",
+        "selector": [
+          { "filenamePattern": "UmbracoTraceLog*.json" },
+          { "filenamePattern": "*.clef" }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "umbracoLogViewer.open",
+        "title": "Open in Umbraco Log Viewer",
+        "category": "Umbraco Log"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "umbracoLogViewer.open",
+          "when": "resourceExtname == .json || resourceExtname == .clef",
+          "group": "navigation@9"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "umbracoLogViewer.open",
+          "when": "resourceExtname == .json || resourceExtname == .clef",
+          "group": "navigation@9"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "umbracoLogViewer.open",
+          "when": "resourceExtname == .json || resourceExtname == .clef"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.2.1"
+  }
+}

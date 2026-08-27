@@ -1,0 +1,325 @@
+:root {
+  --lvl-verbose: var(--vscode-disabledForeground, #8a8a8a);
+  --lvl-debug: var(--vscode-descriptionForeground, #9a9a9a);
+  --lvl-information: var(--vscode-charts-blue, #3794ff);
+  --lvl-warning: var(--vscode-editorWarning-foreground, #cca700);
+  --lvl-error: var(--vscode-editorError-foreground, #f14c4c);
+  --lvl-fatal: var(--vscode-charts-red, #f14c4c);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size, 13px);
+  color: var(--vscode-foreground);
+  background: var(--vscode-editor-background);
+}
+
+/* Toolbar ----------------------------------------------------------------- */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px 10px;
+  background: var(--vscode-editor-background);
+  border-bottom: 1px solid var(--vscode-panel-border, rgba(128, 128, 128, 0.35));
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbar-row + .toolbar-row {
+  margin-top: 8px;
+}
+
+#search {
+  flex: 1;
+  min-width: 180px;
+  padding: 5px 8px;
+  color: var(--vscode-input-foreground);
+  background: var(--vscode-input-background);
+  border: 1px solid var(--vscode-input-border, transparent);
+  border-radius: 4px;
+  outline: none;
+}
+
+#search:focus {
+  border-color: var(--vscode-focusBorder);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--vscode-descriptionForeground);
+  white-space: nowrap;
+  user-select: none;
+}
+
+button.ghost {
+  padding: 4px 10px;
+  color: var(--vscode-foreground);
+  background: transparent;
+  border: 1px solid var(--vscode-panel-border, rgba(128, 128, 128, 0.4));
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.ghost:hover {
+  background: var(--vscode-toolbar-hoverBackground, rgba(128, 128, 128, 0.15));
+}
+
+button.ghost.small {
+  padding: 2px 8px;
+  font-size: 11px;
+}
+
+/* Level chips ------------------------------------------------------------- */
+.level-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  font-size: 12px;
+  color: var(--vscode-foreground);
+  background: transparent;
+  border: 1px solid var(--vscode-panel-border, rgba(128, 128, 128, 0.4));
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.level-chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.level-chip .count {
+  color: var(--vscode-descriptionForeground);
+  font-variant-numeric: tabular-nums;
+}
+
+.level-chip.off {
+  opacity: 0.4;
+}
+
+.level-chip.on {
+  background: var(--vscode-toolbar-hoverBackground, rgba(128, 128, 128, 0.12));
+}
+
+.level-verbose {
+  color: var(--lvl-verbose);
+}
+.level-debug {
+  color: var(--lvl-debug);
+}
+.level-information {
+  color: var(--lvl-information);
+}
+.level-warning {
+  color: var(--lvl-warning);
+}
+.level-error {
+  color: var(--lvl-error);
+}
+.level-fatal {
+  color: var(--lvl-fatal);
+}
+
+/* List -------------------------------------------------------------------- */
+#list {
+  flex: 1;
+  overflow: auto;
+  padding: 2px 0 40px;
+  font-family: var(--vscode-editor-font-family, monospace);
+}
+
+.row {
+  border-left: 3px solid transparent;
+}
+
+.row.level-warning {
+  border-left-color: var(--lvl-warning);
+}
+.row.level-error {
+  border-left-color: var(--lvl-error);
+}
+.row.level-fatal {
+  border-left-color: var(--lvl-fatal);
+}
+
+.row-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 10px 3px 6px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.row-head:hover {
+  background: var(--vscode-list-hoverBackground, rgba(128, 128, 128, 0.08));
+}
+
+.twist {
+  width: 12px;
+  flex: 0 0 12px;
+  color: var(--vscode-descriptionForeground);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.time {
+  flex: 0 0 auto;
+  color: var(--vscode-descriptionForeground);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+
+.badge {
+  flex: 0 0 auto;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 3px;
+  /* Knock the label out against the level-coloured background below.
+     The background is set per level so it can't collapse to currentColor. */
+  color: var(--vscode-editor-background);
+}
+
+.badge.level-verbose {
+  background: var(--lvl-verbose);
+}
+.badge.level-debug {
+  background: var(--lvl-debug);
+}
+.badge.level-information {
+  background: var(--lvl-information);
+}
+.badge.level-warning {
+  background: var(--lvl-warning);
+}
+.badge.level-error {
+  background: var(--lvl-error);
+}
+.badge.level-fatal {
+  background: var(--lvl-fatal);
+}
+
+.msg {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--vscode-foreground);
+}
+
+/* Detail ------------------------------------------------------------------ */
+.detail {
+  padding: 6px 10px 10px 29px;
+  background: var(--vscode-textBlockQuote-background, rgba(128, 128, 128, 0.06));
+  border-bottom: 1px solid var(--vscode-panel-border, rgba(128, 128, 128, 0.2));
+}
+
+.detail.hidden {
+  display: none;
+}
+
+table.props {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+table.props td {
+  vertical-align: top;
+  padding: 2px 10px 2px 0;
+  font-size: 12px;
+}
+
+td.pk {
+  white-space: nowrap;
+  color: var(--vscode-symbolIcon-propertyForeground, var(--lvl-information));
+  font-weight: 600;
+}
+
+td.pv {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--vscode-foreground);
+}
+
+.template {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.template .lbl,
+.detail-bar .meta {
+  color: var(--vscode-descriptionForeground);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.template code {
+  color: var(--vscode-descriptionForeground);
+}
+
+.exception {
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  overflow: auto;
+  color: var(--lvl-error);
+  background: var(--vscode-editor-background);
+  border: 1px solid var(--lvl-error);
+  border-radius: 4px;
+  white-space: pre;
+  font-size: 12px;
+}
+
+.detail-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-bar .meta {
+  flex: 1;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Status ------------------------------------------------------------------ */
+.status {
+  position: sticky;
+  bottom: 0;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+  background: var(--vscode-editor-background);
+  border-top: 1px solid var(--vscode-panel-border, rgba(128, 128, 128, 0.35));
+}
