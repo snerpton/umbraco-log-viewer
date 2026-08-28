@@ -2,16 +2,16 @@
   "name": "umbraco-log-viewer",
   "displayName": "Umbraco Log Viewer (Serilog / CLEF)",
   "description": "View UmbracoTraceLog.*.json and .clef log files produced by Serilog. Renders message templates, colours by level, and lets you search, filter and expand event details.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "snerpton",
   "license": "MIT",
   "icon": "media/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/umbraco-log-viewer.git"
+    "url": "https://github.com/snerpton/umbraco-log-viewer"
   },
   "bugs": {
-    "url": "https://github.com/your-username/umbraco-log-viewer/issues"
+    "url": "https://github.com/snerpton/umbraco-log-viewer/issues"
   },
   "galleryBanner": {
     "color": "#182338",
