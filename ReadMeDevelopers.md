@@ -8,7 +8,7 @@
    your own Umbraco log files, usually under `umbraco/Logs/`).
 
 No build step and no `npm install` are required — the extension is plain
-JavaScript. I've been building with `v26.7.0`.
+JavaScript. 
 
 ## Install it permanently
 
@@ -17,8 +17,10 @@ Package it into a `.vsix` and install:
 ```bash
 npm install -g @vscode/vsce
 vsce package
-code --install-extension umbraco-log-viewer-0.1.0.vsix
+code --install-extension umbraco-log-viewer-x.y.z.vsix
 ```
+
+For reference I've been using node `v26.7.0`.
 
 ## Publish to the Marketplace (automated)
 

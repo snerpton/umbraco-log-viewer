@@ -1,5 +1,10 @@
 # Change Log
 
+
+## 0.2.1
+
+- Update `README.md` to improve enduser experience, by moving developer related information to `ReadMeDevelopers.md`.
+
 ## 0.2.0
 
 - Add a "Poll for changes" toggle in the viewer toolbar to continuously
