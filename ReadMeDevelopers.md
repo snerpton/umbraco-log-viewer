@@ -8,7 +8,7 @@
    your own Umbraco log files, usually under `umbraco/Logs/`).
 
 No build step and no `npm install` are required — the extension is plain
-JavaScript.
+JavaScript. I've been building with `v26.7.0`.
 
 ## Install it permanently
 
