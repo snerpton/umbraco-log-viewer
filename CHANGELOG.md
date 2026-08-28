@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.2
+
+- Review of `README.md` and polling times.
 
 ## 0.2.1
 
