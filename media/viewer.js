@@ -239,6 +239,9 @@
       '">' +
       ev.level.slice(0, 3).toUpperCase() +
       "</span>" +
+      (ev.machine
+        ? '<span class="machine">' + escapeHtml(ev.machine) + "</span>"
+        : "") +
       '<span class="msg"></span>';
 
     head.querySelector(".msg").textContent =
@@ -265,9 +268,36 @@
 
     const props = ev.properties || {};
     const keys = Object.keys(props);
-    if (keys.length) {
+    if (keys.length || ev.t || ev.template) {
       const table = document.createElement("table");
       table.className = "props";
+
+      if (ev.t) {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.className = "pk";
+        td1.textContent = "timestamp";
+        const td2 = document.createElement("td");
+        td2.className = "pv";
+        td2.textContent = formatTime(ev.t);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        table.appendChild(tr);
+      }
+
+      if (ev.template) {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.className = "pk";
+        td1.textContent = "template";
+        const td2 = document.createElement("td");
+        td2.className = "pv";
+        td2.textContent = ev.template;
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        table.appendChild(tr);
+      }
+
       for (const k of keys) {
         const tr = document.createElement("tr");
         const td1 = document.createElement("td");
@@ -283,16 +313,6 @@
         table.appendChild(tr);
       }
       wrap.appendChild(table);
-    }
-
-    if (ev.template) {
-      const tpl = document.createElement("div");
-      tpl.className = "template";
-      tpl.innerHTML = '<span class="lbl">template</span> ';
-      const code = document.createElement("code");
-      code.textContent = ev.template;
-      tpl.appendChild(code);
-      wrap.appendChild(tpl);
     }
 
     if (ev.exception) {

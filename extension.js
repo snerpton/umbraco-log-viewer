@@ -288,6 +288,7 @@ function normalizeEvent(o, lineNumber) {
     line: lineNumber,
     t: o["@t"] || null,
     level: normalizeLevel(o["@l"]),
+    machine: typeof properties.MachineName === "string" ? properties.MachineName : null,
     template: typeof o["@mt"] === "string" ? o["@mt"] : "",
     rendered: typeof o["@m"] === "string" ? o["@m"] : null,
     exception: typeof o["@x"] === "string" ? o["@x"] : null,
