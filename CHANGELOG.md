@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.2.3
+
+- Add machine name to the sample `UmbracoTraceLog.DEMO.20260812.json` log entries.
+- Show `timestamp` and `template` as the first two items in the expanded
+  structured data section for a log entry, formatted the same as other
+  properties.
+
 ## 0.2.2
 
 - Review of `README.md` and polling times.
