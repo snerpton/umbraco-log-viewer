@@ -1,11 +1,11 @@
-{"@t":"2026-08-12T09:33:20.1010000Z","@mt":"Acquiring MainDom.","SourceContext":"Umbraco.Cms.Infrastructure.Runtime.MainDom"}
+{"@t":"2026-08-12T09:33:20.1010000Z","@mt":"Acquiring MainDom.","SourceContext":"Umbraco.Cms.Infrastructure.Runtime.MainDom","MachineName":"DEMO"}
 {"@t":"2026-08-12T09:33:20.4550000Z","@mt":"Booting Umbraco {UmbracoVersion} on {MachineName}.","UmbracoVersion":"13.5.2","MachineName":"DEMO","ProcessId":25776}
-{"@t":"2026-08-12T09:33:21.0120000Z","@l":"Debug","@mt":"Resolved type {TypeName} in {Elapsed}ms.","TypeName":"ContentService","Elapsed":42}
-{"@t":"2026-08-12T09:33:22.7770000Z","@mt":"Document {DocumentName} (id={Id}) has been published.","DocumentName":"Home","Id":1062,"UserId":-1}
-{"@t":"2026-08-12T09:33:23.6770000Z","@l":"Warning","@mt":"Examine index {IndexName} is not healthy: {Reason}","IndexName":"ExternalIndex","Reason":"rebuild required"}
-{"@t":"2026-08-12T09:33:24.1200000Z","@l":"Verbose","@mt":"Cache hit for key {CacheKey}.","CacheKey":"content-1062"}
-{"@t":"2026-08-12T09:33:25.9910000Z","@l":"Error","@mt":"Unhandled error rendering {Url}.","Url":"/products/","@x":"System.NullReferenceException: Object reference not set to an instance of an object.\n   at MyApp.Controllers.ProductsController.Index() in C:\\src\\MyApp\\Controllers\\ProductsController.cs:line 34\n   at lambda_method(Closure, Object, Object[])"}
-{"@t":"2026-08-12T09:33:26.4400000Z","@mt":"Request {Method} {Path} responded {StatusCode} in {Elapsed:0.0}ms","Method":"GET","Path":"/","StatusCode":200,"Elapsed":18.4}
-{"@t":"2026-08-12T09:33:27.0000000Z","@l":"Fatal","@mt":"Application is shutting down due to {Signal}.","Signal":"SIGTERM"}
+{"@t":"2026-08-12T09:33:21.0120000Z","@l":"Debug","@mt":"Resolved type {TypeName} in {Elapsed}ms.","TypeName":"ContentService","Elapsed":42,"MachineName":"DEMO"}
+{"@t":"2026-08-12T09:33:22.7770000Z","@mt":"Document {DocumentName} (id={Id}) has been published.","DocumentName":"Home","Id":1062,"UserId":-1,"MachineName":"DEMO"}
+{"@t":"2026-08-12T09:33:23.6770000Z","@l":"Warning","@mt":"Examine index {IndexName} is not healthy: {Reason}","IndexName":"ExternalIndex","Reason":"rebuild required","MachineName":"DEMO"}
+{"@t":"2026-08-12T09:33:24.1200000Z","@l":"Verbose","@mt":"Cache hit for key {CacheKey}.","CacheKey":"content-1062","MachineName":"DEMO"}
+{"@t":"2026-08-12T09:33:25.9910000Z","@l":"Error","@mt":"Unhandled error rendering {Url}.","Url":"/products/","@x":"System.NullReferenceException: Object reference not set to an instance of an object.\n   at MyApp.Controllers.ProductsController.Index() in C:\\src\\MyApp\\Controllers\\ProductsController.cs:line 34\n   at lambda_method(Closure, Object, Object[])","MachineName":"DEMO"}
+{"@t":"2026-08-12T09:33:26.4400000Z","@mt":"Request {Method} {Path} responded {StatusCode} in {Elapsed:0.0}ms","Method":"GET","Path":"/","StatusCode":200,"Elapsed":18.4,"MachineName":"DEMO"}
+{"@t":"2026-08-12T09:33:27.0000000Z","@l":"Fatal","@mt":"Application is shutting down due to {Signal}.","Signal":"SIGTERM","MachineName":"DEMO"}
 this line is deliberately not valid json to show the parser skips it gracefully
-{"@t":"2026-08-12T09:33:28.1200000Z","@mt":"Scheduled task {TaskName} completed with result {@Result}.","TaskName":"HealthCheck","Result":{"Passed":12,"Failed":1}}
+{"@t":"2026-08-12T09:33:28.1200000Z","@mt":"Scheduled task {TaskName} completed with result {@Result}.","TaskName":"HealthCheck","Result":{"Passed":12,"Failed":1},"MachineName":"DEMO"}
