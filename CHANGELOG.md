@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.2.4
+
+- Add a database-unavailable warning/error example to the sample
+  `UmbracoTraceLog.DEMO.20260812.json` log, to better illustrate exception
+  rendering.
+- Add a `homepage` link to the extension manifest.
+
 ## 0.2.3
 
 - Add machine name to the sample `UmbracoTraceLog.DEMO.20260812.json` log entries.
