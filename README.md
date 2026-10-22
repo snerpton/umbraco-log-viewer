@@ -1,3 +1,9 @@
+[![CI](https://github.com/snerpton/umbraco-log-viewer/actions/workflows/release.yml/badge.svg)](https://github.com/snerpton/umbraco-log-viewer/actions/workflows/release.yml)
+[![VS Code Marketplace](https://img.shields.io/github/package-json/v/snerpton/umbraco-log-viewer?label=VS%20Code%20Marketplace&color=007ACC)](https://marketplace.visualstudio.com/items?itemName=snerpton.umbraco-log-viewer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+
 # Umbraco Log Viewer
 
 A VS Code extension that turns `UmbracoTraceLog.*.json` files into a readable,
